@@ -1,0 +1,700 @@
+function [CollectGF,CollectInputJac]=Input_TAWE(t,q,p,u,s,TF_Global,TransDis_Global,Vel_Global,Jac_Global,Quat_Global)
+%% Author: Jiamin Wang; Updated: 2021-12-15;
+    CollectGF=zeros(numel(q)/2,1);
+    CollectInputJac=zeros(numel(q)/2,numel(u));
+    ForceNum=9;
+    if ForceNum>0
+        CollectGF=zeros(numel(q)/2,ForceNum);
+        CollectInputJac=zeros(numel(q)/2,numel(u),ForceNum);
+    end
+    SubGF=zeros(numel(q)/2,1);
+    SubInputJac=zeros(numel(q)/2,numel(u));
+    for FCount=1:ForceNum
+%SWITCHCASE_
+
+		switch FCount
+		    case 1
+		        SubFrame=[8];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[8];
+		        RefFrame=[1];
+		        SubJac=Jac_Global(1:3,:,ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_1(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_1(t,q,p,u,s,SubSubs);
+		    case 2
+		        SubFrame=[9];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[9];
+		        RefFrame=[1];
+		        SubJac=Jac_Global(1:3,:,ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_2(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_2(t,q,p,u,s,SubSubs);
+		    case 3
+		        SubFrame=[10];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[10];
+		        RefFrame=[1];
+		        SubJac=Jac_Global(1:3,:,ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_3(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_3(t,q,p,u,s,SubSubs);
+		    case 4
+		        SubFrame=[11];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[11];
+		        RefFrame=[1];
+		        SubJac=Jac_Global(1:3,:,ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_4(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_4(t,q,p,u,s,SubSubs);
+		    case 5
+		        SubFrame=[7];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[-7];
+		        RefFrame=[3];
+		        SubJac=Jac_Global(4:6,:,-ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_5(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_5(t,q,p,u,s,SubSubs);
+		    case 6
+		        SubFrame=[7];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[-7];
+		        RefFrame=[4];
+		        SubJac=Jac_Global(4:6,:,-ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_6(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_6(t,q,p,u,s,SubSubs);
+		    case 7
+		        SubFrame=[21];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[-21];
+		        RefFrame=[14];
+		        SubJac=Jac_Global(4:6,:,-ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_7(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_7(t,q,p,u,s,SubSubs);
+		    case 8
+		        SubFrame=[21];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[-21];
+		        RefFrame=[15];
+		        SubJac=Jac_Global(4:6,:,-ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_8(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_8(t,q,p,u,s,SubSubs);
+		    case 9
+		        SubFrame=[22];
+		        SubSubs=0;
+		        if SubFrame(1)~=0
+		            SubSubs=[TransDis_Global(:,SubFrame);Vel_Global(:,SubFrame);Quat_Global(:,SubFrame)];
+		        end
+		        ActFrame=[-22];
+		        RefFrame=[15];
+		        SubJac=Jac_Global(4:6,:,-ActFrame);
+		        SubEff=TF_Global(1:3,1:3,RefFrame)*InputEff_9(t,q,p,u,s,SubSubs);
+		        SubGF=SubJac.'*SubEff;
+		        SubInputJac=SubJac.'*InputEffJac_9(t,q,p,u,s,SubSubs);
+		end
+
+        CollectGF(:,FCount)=SubGF;
+        CollectInputJac(:,:,FCount)=SubInputJac;
+    end
+
+	function out1 = ForceJac_1(t,in2,in3,in4,in5,in6)
+	%ForceJac_1
+	%    OUT1 = ForceJac_1(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:08
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_2(t,in2,in3,in4,in5,in6)
+	%ForceJac_2
+	%    OUT1 = ForceJac_2(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_3(t,in2,in3,in4,in5,in6)
+	%ForceJac_3
+	%    OUT1 = ForceJac_3(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_4(t,in2,in3,in4,in5,in6)
+	%ForceJac_4
+	%    OUT1 = ForceJac_4(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_5(t,in2,in3,in4,in5,in6)
+	%ForceJac_5
+	%    OUT1 = ForceJac_5(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_6(t,in2,in3,in4,in5,in6)
+	%ForceJac_6
+	%    OUT1 = ForceJac_6(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_7(t,in2,in3,in4,in5,in6)
+	%ForceJac_7
+	%    OUT1 = ForceJac_7(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_8(t,in2,in3,in4,in5,in6)
+	%ForceJac_8
+	%    OUT1 = ForceJac_8(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	out1 = 0.0;
+	end
+
+	function out1 = ForceJac_9(t,in2,in3,in4,in5,in6)
+	%ForceJac_9
+	%    OUT1 = ForceJac_9(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:13
+	out1 = 0.0;
+	end
+
+	function out1 = InputEff_1(t,in2,in3,in4,in5,in6)
+	%InputEff_1
+	%    OUT1 = InputEff_1(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:08
+	g = in3(1,:);
+	handmpt1 = in4(5,:);
+	out1 = [0.0;0.0;-g.*handmpt1];
+	end
+
+	function out1 = InputEff_2(t,in2,in3,in4,in5,in6)
+	%InputEff_2
+	%    OUT1 = InputEff_2(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	g = in3(1,:);
+	handmpt2 = in4(6,:);
+	out1 = [0.0;0.0;-g.*handmpt2];
+	end
+
+	function out1 = InputEff_3(t,in2,in3,in4,in5,in6)
+	%InputEff_3
+	%    OUT1 = InputEff_3(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	g = in3(1,:);
+	handmpt3 = in4(7,:);
+	out1 = [0.0;0.0;-g.*handmpt3];
+	end
+
+	function out1 = InputEff_4(t,in2,in3,in4,in5,in6)
+	%InputEff_4
+	%    OUT1 = InputEff_4(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	g = in3(1,:);
+	handmpt4 = in4(8,:);
+	out1 = [0.0;0.0;-g.*handmpt4];
+	end
+
+	function out1 = InputEff_5(t,in2,in3,in4,in5,in6)
+	%InputEff_5
+	%    OUT1 = InputEff_5(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	u1dev = in4(1,:);
+	out1 = [0.0;0.0;u1dev];
+	end
+
+	function out1 = InputEff_6(t,in2,in3,in4,in5,in6)
+	%InputEff_6
+	%    OUT1 = InputEff_6(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	u1flex = in4(2,:);
+	out1 = [u1flex;0.0;0.0];
+	end
+
+	function out1 = InputEff_7(t,in2,in3,in4,in5,in6)
+	%InputEff_7
+	%    OUT1 = InputEff_7(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	u21 = in4(3,:);
+	out1 = [0.0;0.0;u21];
+	end
+
+	function out1 = InputEff_8(t,in2,in3,in4,in5,in6)
+	%InputEff_8
+	%    OUT1 = InputEff_8(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	u22 = in4(4,:);
+	out1 = [-u22;0.0;0.0];
+	end
+
+	function out1 = InputEff_9(t,in2,in3,in4,in5,in6)
+	%InputEff_9
+	%    OUT1 = InputEff_9(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:13
+	u22 = in4(4,:);
+	out1 = [u22;0.0;0.0];
+	end
+
+	function out1 = InputEffJac_1(t,in2,in3,in4,in5,in6)
+	%InputEffJac_1
+	%    OUT1 = InputEffJac_1(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	g = in3(1,:);
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-g,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_2(t,in2,in3,in4,in5,in6)
+	%InputEffJac_2
+	%    OUT1 = InputEffJac_2(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	g = in3(1,:);
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-g,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_3(t,in2,in3,in4,in5,in6)
+	%InputEffJac_3
+	%    OUT1 = InputEffJac_3(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	g = in3(1,:);
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-g,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_4(t,in2,in3,in4,in5,in6)
+	%InputEffJac_4
+	%    OUT1 = InputEffJac_4(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	g = in3(1,:);
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-g],[3,8]);
+	end
+
+	function out1 = InputEffJac_5(t,in2,in3,in4,in5,in6)
+	%InputEffJac_5
+	%    OUT1 = InputEffJac_5(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	rf1IMU1x = in3(24,:);
+	rf1IMU1y = in3(25,:);
+	rf1IMU1z = in3(26,:);
+	rf1Devx = in3(27,:);
+	rf1Devy = in3(28,:);
+	rf1Devz = in3(29,:);
+	t2 = cos(rf1IMU1x);
+	t3 = cos(rf1IMU1y);
+	t4 = cos(rf1IMU1z);
+	t5 = cos(rf1Devx);
+	t6 = cos(rf1Devy);
+	t7 = cos(rf1Devz);
+	t8 = sin(rf1IMU1x);
+	t9 = sin(rf1IMU1y);
+	t10 = sin(rf1IMU1z);
+	t11 = sin(rf1Devx);
+	t12 = sin(rf1Devy);
+	t13 = sin(rf1Devz);
+	t16 = rf1IMU1x./2.0;
+	t17 = rf1IMU1y./2.0;
+	t18 = rf1IMU1z./2.0;
+	t14 = t7.*t11;
+	t15 = t11.*t13;
+	t19 = cos(t16);
+	t20 = cos(t18);
+	t21 = t5.*t12.*t13;
+	t22 = t5.*t7.*t12;
+	t23 = t19.^2;
+	t24 = t20.^2;
+	t25 = -t21;
+	t26 = t15+t22;
+	t27 = t14+t25;
+	out1 = reshape([t27.*(t2.*t10-t4.*t8.*t9)+t5.*t6.*(t8.*t10+t2.*t4.*t9)+t3.*t4.*t26,-t27.*(t23.*-2.0-t24.*2.0+t23.*t24.*4.0+t19.*t20.*cos(t17).*sin(t16).*sin(t17).*sin(t18).*8.0+1.0)-t5.*t6.*(t4.*t8-t2.*t9.*t10)+t3.*t10.*t26,-t9.*t26-t3.*t8.*t27+t2.*t3.*t5.*t6,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_6(t,in2,in3,in4,in5,in6)
+	%InputEffJac_6
+	%    OUT1 = InputEffJac_6(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	q1dev__dt_0_ = in2(1,:);
+	q1sup__dt_0_ = in2(3,:);
+	rf1IMU1x = in3(24,:);
+	rf1IMU1y = in3(25,:);
+	rf1IMU1z = in3(26,:);
+	rf1Devx = in3(27,:);
+	rf1Devy = in3(28,:);
+	rf1Devz = in3(29,:);
+	t2 = cos(q1dev__dt_0_);
+	t3 = cos(q1sup__dt_0_);
+	t4 = cos(rf1IMU1x);
+	t5 = cos(rf1IMU1y);
+	t6 = cos(rf1IMU1z);
+	t7 = cos(rf1Devx);
+	t8 = cos(rf1Devy);
+	t9 = cos(rf1Devz);
+	t10 = sin(q1dev__dt_0_);
+	t11 = sin(q1sup__dt_0_);
+	t12 = sin(rf1IMU1x);
+	t13 = sin(rf1IMU1y);
+	t14 = sin(rf1IMU1z);
+	t15 = sin(rf1Devx);
+	t16 = sin(rf1Devy);
+	t17 = sin(rf1Devz);
+	t21 = rf1IMU1x./2.0;
+	t22 = rf1IMU1y./2.0;
+	t23 = rf1IMU1z./2.0;
+	t24 = rf1Devx./2.0;
+	t25 = rf1Devy./2.0;
+	t26 = rf1Devz./2.0;
+	t18 = t7.*t17;
+	t19 = t9.*t15;
+	t20 = t15.*t17;
+	t27 = cos(t21);
+	t28 = cos(t23);
+	t29 = cos(t24);
+	t30 = cos(t25);
+	t31 = cos(t26);
+	t32 = sin(t24);
+	t33 = sin(t25);
+	t34 = sin(t26);
+	t37 = t2.*t3.*t16;
+	t38 = t7.*t8.*t11;
+	t39 = t7.*t9.*t16;
+	t46 = t2.*t3.*t8.*t9;
+	t47 = t2.*t3.*t8.*t17;
+	t48 = t3.*t8.*t10.*t15;
+	t35 = t16.*t18;
+	t36 = t16.*t19;
+	t40 = t27.^2;
+	t41 = t28.^2;
+	t42 = t29.^2;
+	t43 = t31.^2;
+	t51 = -t46;
+	t52 = -t48;
+	t55 = t20+t39;
+	t63 = t29.*t30.*t31.*t32.*t33.*t34.*8.0;
+	t44 = -t35;
+	t45 = -t36;
+	t49 = t42.*2.0;
+	t50 = t43.*2.0;
+	t58 = t11.*t55;
+	t59 = t42.*t43.*4.0;
+	t62 = t37+t38+t52;
+	t53 = -t49;
+	t54 = -t50;
+	t56 = t18+t45;
+	t57 = t19+t44;
+	t60 = t11.*t57;
+	t61 = t3.*t10.*t56;
+	t65 = t53+t54+t59+t63+1.0;
+	t64 = t51+t58+t61;
+	t66 = t3.*t10.*t65;
+	t67 = t47+t60+t66;
+	out1 = reshape([0.0,0.0,0.0,-t62.*(t12.*t14+t4.*t6.*t13)-t67.*(t4.*t14-t6.*t12.*t13)-t5.*t6.*t64,t62.*(t6.*t12-t4.*t13.*t14)+t67.*(t40.*-2.0-t41.*2.0+t40.*t41.*4.0+t27.*t28.*cos(t22).*sin(t21).*sin(t22).*sin(t23).*8.0+1.0)-t5.*t14.*t64,t13.*t64-t4.*t5.*t62+t5.*t12.*t67,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_7(t,in2,in3,in4,in5,in6)
+	%InputEffJac_7
+	%    OUT1 = InputEffJac_7(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	rf1IMU1x = in3(24,:);
+	rf1IMU1y = in3(25,:);
+	rf1IMU1z = in3(26,:);
+	rf2Medx = in3(33,:);
+	rf2Medy = in3(34,:);
+	rf2Medz = in3(35,:);
+	t2 = cos(rf1IMU1x);
+	t3 = cos(rf1IMU1y);
+	t4 = cos(rf1IMU1z);
+	t5 = cos(rf2Medx);
+	t6 = cos(rf2Medy);
+	t7 = cos(rf2Medz);
+	t8 = sin(rf1IMU1x);
+	t9 = sin(rf1IMU1y);
+	t10 = sin(rf1IMU1z);
+	t11 = sin(rf2Medx);
+	t12 = sin(rf2Medy);
+	t13 = sin(rf2Medz);
+	t16 = rf1IMU1x./2.0;
+	t17 = rf1IMU1y./2.0;
+	t18 = rf1IMU1z./2.0;
+	t14 = t7.*t11;
+	t15 = t11.*t13;
+	t19 = cos(t16);
+	t20 = cos(t18);
+	t21 = t5.*t12.*t13;
+	t22 = t5.*t7.*t12;
+	t23 = t19.^2;
+	t24 = t20.^2;
+	t25 = -t21;
+	t26 = t15+t22;
+	t27 = t14+t25;
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,t27.*(t2.*t10-t4.*t8.*t9)+t5.*t6.*(t8.*t10+t2.*t4.*t9)+t3.*t4.*t26,-t27.*(t23.*-2.0-t24.*2.0+t23.*t24.*4.0+t19.*t20.*cos(t17).*sin(t16).*sin(t17).*sin(t18).*8.0+1.0)-t5.*t6.*(t4.*t8-t2.*t9.*t10)+t3.*t10.*t26,-t9.*t26-t3.*t8.*t27+t2.*t3.*t5.*t6,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_8(t,in2,in3,in4,in5,in6)
+	%InputEffJac_8
+	%    OUT1 = InputEffJac_8(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	q2w1__dt_0_ = in2(4,:);
+	rf1IMU1x = in3(24,:);
+	rf1IMU1y = in3(25,:);
+	rf1IMU1z = in3(26,:);
+	rf2Medx = in3(33,:);
+	rf2Medy = in3(34,:);
+	rf2Medz = in3(35,:);
+	riw1 = in3(36,:);
+	t2 = cos(rf1IMU1x);
+	t3 = cos(rf1IMU1y);
+	t4 = cos(rf1IMU1z);
+	t5 = cos(rf2Medx);
+	t6 = cos(rf2Medy);
+	t7 = cos(rf2Medz);
+	t8 = sin(rf1IMU1x);
+	t9 = sin(rf1IMU1y);
+	t10 = sin(rf1IMU1z);
+	t11 = sin(rf2Medx);
+	t12 = sin(rf2Medy);
+	t13 = sin(rf2Medz);
+	t14 = q2w1__dt_0_+riw1;
+	t18 = rf1IMU1x./2.0;
+	t19 = rf1IMU1y./2.0;
+	t20 = rf1IMU1z./2.0;
+	t21 = rf2Medx./2.0;
+	t22 = rf2Medy./2.0;
+	t23 = rf2Medz./2.0;
+	t15 = cos(t14);
+	t16 = sin(t14);
+	t17 = t5.*t13;
+	t24 = cos(t18);
+	t25 = cos(t20);
+	t26 = cos(t21);
+	t27 = cos(t22);
+	t28 = cos(t23);
+	t29 = sin(t21);
+	t30 = sin(t22);
+	t31 = sin(t23);
+	t32 = t7.*t11.*t12;
+	t33 = t12.*t15;
+	t34 = t24.^2;
+	t35 = t25.^2;
+	t36 = t26.^2;
+	t37 = t28.^2;
+	t38 = -t32;
+	t39 = t6.*t7.*t15;
+	t40 = t6.*t13.*t15;
+	t41 = t6.*t11.*t16;
+	t53 = t26.*t27.*t28.*t29.*t30.*t31.*8.0;
+	t42 = t36.*2.0;
+	t43 = t37.*2.0;
+	t44 = -t39;
+	t45 = -t41;
+	t48 = t17+t38;
+	t49 = t36.*t37.*4.0;
+	t46 = -t42;
+	t47 = -t43;
+	t50 = t33+t45;
+	t51 = t16.*t48;
+	t52 = t44+t51;
+	t54 = t46+t47+t49+t53+1.0;
+	t55 = t16.*t54;
+	t56 = t40+t55;
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,t50.*(t8.*t10+t2.*t4.*t9)+t56.*(t2.*t10-t4.*t8.*t9)-t3.*t4.*(t39-t51),-t50.*(t4.*t8-t2.*t9.*t10)-t56.*(t34.*-2.0-t35.*2.0+t34.*t35.*4.0+t24.*t25.*cos(t19).*sin(t18).*sin(t19).*sin(t20).*8.0+1.0)-t3.*t10.*(t39-t51),t9.*(t39-t51)+t2.*t3.*t50-t3.*t8.*t56,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputEffJac_9(t,in2,in3,in4,in5,in6)
+	%InputEffJac_9
+	%    OUT1 = InputEffJac_9(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:13
+	q2w1__dt_0_ = in2(4,:);
+	rf1IMU1x = in3(24,:);
+	rf1IMU1y = in3(25,:);
+	rf1IMU1z = in3(26,:);
+	rf2Medx = in3(33,:);
+	rf2Medy = in3(34,:);
+	rf2Medz = in3(35,:);
+	riw1 = in3(36,:);
+	t2 = cos(rf1IMU1x);
+	t3 = cos(rf1IMU1y);
+	t4 = cos(rf1IMU1z);
+	t5 = cos(rf2Medx);
+	t6 = cos(rf2Medy);
+	t7 = cos(rf2Medz);
+	t8 = sin(rf1IMU1x);
+	t9 = sin(rf1IMU1y);
+	t10 = sin(rf1IMU1z);
+	t11 = sin(rf2Medx);
+	t12 = sin(rf2Medy);
+	t13 = sin(rf2Medz);
+	t14 = q2w1__dt_0_+riw1;
+	t18 = rf1IMU1x./2.0;
+	t19 = rf1IMU1y./2.0;
+	t20 = rf1IMU1z./2.0;
+	t21 = rf2Medx./2.0;
+	t22 = rf2Medy./2.0;
+	t23 = rf2Medz./2.0;
+	t15 = cos(t14);
+	t16 = sin(t14);
+	t17 = t5.*t13;
+	t24 = cos(t18);
+	t25 = cos(t20);
+	t26 = cos(t21);
+	t27 = cos(t22);
+	t28 = cos(t23);
+	t29 = sin(t21);
+	t30 = sin(t22);
+	t31 = sin(t23);
+	t32 = t7.*t11.*t12;
+	t33 = t12.*t15;
+	t34 = t24.^2;
+	t35 = t25.^2;
+	t36 = t26.^2;
+	t37 = t28.^2;
+	t38 = -t32;
+	t39 = t6.*t7.*t15;
+	t40 = t6.*t13.*t15;
+	t41 = t6.*t11.*t16;
+	t53 = t26.*t27.*t28.*t29.*t30.*t31.*8.0;
+	t42 = t36.*2.0;
+	t43 = t37.*2.0;
+	t44 = -t39;
+	t45 = -t41;
+	t48 = t17+t38;
+	t49 = t36.*t37.*4.0;
+	t46 = -t42;
+	t47 = -t43;
+	t50 = t33+t45;
+	t51 = t16.*t48;
+	t52 = t44+t51;
+	t54 = t46+t47+t49+t53+1.0;
+	t55 = t16.*t54;
+	t56 = t40+t55;
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-t50.*(t8.*t10+t2.*t4.*t9)-t56.*(t2.*t10-t4.*t8.*t9)+t3.*t4.*(t39-t51),t50.*(t4.*t8-t2.*t9.*t10)+t56.*(t34.*-2.0-t35.*2.0+t34.*t35.*4.0+t24.*t25.*cos(t19).*sin(t18).*sin(t19).*sin(t20).*8.0+1.0)+t3.*t10.*(t39-t51),-t9.*(t39-t51)-t2.*t3.*t50+t3.*t8.*t56,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,8]);
+	end
+
+	function out1 = InputFVJac_1(t,in2,in3,in4,in5,in6)
+	%InputFVJac_1
+	%    OUT1 = InputFVJac_1(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	out1 = reshape([1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_2(t,in2,in3,in4,in5,in6)
+	%InputFVJac_2
+	%    OUT1 = InputFVJac_2(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:09
+	out1 = reshape([1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_3(t,in2,in3,in4,in5,in6)
+	%InputFVJac_3
+	%    OUT1 = InputFVJac_3(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	out1 = reshape([1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_4(t,in2,in3,in4,in5,in6)
+	%InputFVJac_4
+	%    OUT1 = InputFVJac_4(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:10
+	out1 = reshape([1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_5(t,in2,in3,in4,in5,in6)
+	%InputFVJac_5
+	%    OUT1 = InputFVJac_5(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_6(t,in2,in3,in4,in5,in6)
+	%InputFVJac_6
+	%    OUT1 = InputFVJac_6(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:11
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_7(t,in2,in3,in4,in5,in6)
+	%InputFVJac_7
+	%    OUT1 = InputFVJac_7(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:12
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_8(t,in2,in3,in4,in5,in6)
+	%InputFVJac_8
+	%    OUT1 = InputFVJac_8(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:13
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0],[3,6]);
+	end
+
+	function out1 = InputFVJac_9(t,in2,in3,in4,in5,in6)
+	%InputFVJac_9
+	%    OUT1 = InputFVJac_9(T,IN2,IN3,IN4,IN5,IN6)
+	%    This function was generated by the Symbolic Math Toolbox version 9.1.
+	%    14-Apr-2023 16:21:13
+	out1 = reshape([0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0],[3,6]);
+	end
+
+end
+
